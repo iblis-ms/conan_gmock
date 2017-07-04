@@ -1,0 +1,16 @@
+image:
+- Visual Studio 2015
+
+environment:
+  VISUAL_STUDIO_YEAR: 2015
+  VISUAL_STUDIO_VERSION: 14
+  MINGW_DIR: C:\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev1
+  
+install:
+  - call "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.cmd" /x64
+  - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x86_amd64
+  - cd tests\windows && call setUp.bat && cd ..\..
+build: off
+
+test_script:
+  - cd tests\windows && call runAllTests.bat

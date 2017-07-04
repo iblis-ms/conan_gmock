@@ -1,0 +1,6 @@
+test_package/build
+output
+conanbuildinfo.cmake
+conaninfo.txt
+.DS_Store
+*.pyc

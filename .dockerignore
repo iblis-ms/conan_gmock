@@ -1,0 +1,7 @@
+# Ignore docker files
+Dockerfile
+.dockerignore
+**/output
+.travis.yml
+.git
+.gitignore

@@ -1,0 +1,5 @@
+[requires]
+GMock/1.8.0@iblis_ms/stable
+
+[generators]
+cmake

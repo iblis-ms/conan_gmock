@@ -1,0 +1,18 @@
+language: c++
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      services: docker
+    - os: osx
+      services: docker
+      env: COMPILER=clang-4.0
+      osx_image: xcode8.3
+
+before_install:
+  - ./testSetUp.sh
+
+script:
+  - ./testRun.sh
+
