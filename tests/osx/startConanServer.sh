@@ -8,8 +8,10 @@ conan remove -f GMock*
 
 conan_server&
 echo "Conan server 1st run: $?"
+sleep 5
 ./stopConanServer.sh
 echo "Conan server 1st run was stopped: $?"
+sleep 5
 cp ../server.conf $HOME/.conan_server/
 
 conan_server&
@@ -25,7 +27,7 @@ if [ -z "$remote" ]; then
 fi
 
 conan user -p demo -r local  demo
-≈
+
 conan upload GMock/1.8.0@iblis_ms/stable --all -r=local --force
 
 echo "GMock was uploaded: $?"

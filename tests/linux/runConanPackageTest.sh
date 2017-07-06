@@ -4,9 +4,7 @@ set -e
 
 echo "------------------ package tests ------------------"
 
-currentScriptPath=$(readlink -f "$0")
-export currentDir=$(dirname "$currentScriptPath")
-
+currentDir=`pwd`
 cd $repoBaseDir
 
 ########################## CLANG ##########################
@@ -45,8 +43,8 @@ if [ ! -e "$CC" ]; then
 fi
 
 echo "----------------------- test package: GCC: libstdc++ -----------------------"
-conan test_package -s compiler=gcc -s compiler.version=$gccVersion -s compiler.libcxx=libstdc++
+conan test_package -s compiler=$gccName -s compiler.version=$gccVersion -s compiler.libcxx=libstdc++
 echo "----------------------- test package: GCC: libstdc++11 -----------------------"
-conan test_package -s compiler=gcc -s compiler.version=$gccVersion -s compiler.libcxx=libstdc++11
+conan test_package -s compiler=$gccName -s compiler.version=$gccVersion -s compiler.libcxx=libstdc++11
 
 cd $currentDir

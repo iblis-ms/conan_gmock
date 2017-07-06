@@ -5,9 +5,14 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(GMockTestProgram CXX)
 
-set(CMAKE_VERBOSE_MAKEFILE ON)
 include(conanbuildinfo.cmake)
 conan_basic_setup()
+
+message(STATUS "BUILD_GTEST=${BUILD_GTEST}")
+message(STATUS "BUILD_GMOCK=${BUILD_GMOCK}")
+message(STATUS "INCLUDE_MAIN=${INCLUDE_MAIN}")
+message(STATUS "SHARED=${SHARED}")
+message(STATUS "STDLIB=${STDLIB}")
 
 set(PROGRAM_NAME "${PROJECT_NAME}")
 
@@ -18,8 +23,6 @@ add_executable(${PROGRAM_NAME} GMockExample.cpp)
 find_package(Threads)
 
 target_link_libraries(${PROGRAM_NAME} PRIVATE ${CONAN_LIBS} ${CMAKE_THREAD_LIBS_INIT})
-
-set_target_properties(${PROGRAM_NAME} PROPERTIES CXX_STANDARD 11)
 
 # Conan sets D_GLIBCXX_USE_CXX11_ABI=1 for stdlibc++11. 
 # You can't mix D_GLIBCXX_USE_CXX11_ABI=0 library with D_GLIBCXX_USE_CXX11_ABI=1 program because of runtime crashes.
@@ -44,3 +47,18 @@ elseif (${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
   target_compile_options(${PROGRAM_NAME} PUBLIC  "/MT")
 endif()
 
+if (${BUILD_GTEST} STREQUAL "True")
+  target_compile_definitions(${PROGRAM_NAME} PUBLIC "BUILD_GTEST")
+endif ()
+
+if (${BUILD_GMOCK} STREQUAL "True")
+  target_compile_definitions(${PROGRAM_NAME} PUBLIC "BUILD_GMOCK")
+endif ()
+
+if (${INCLUDE_MAIN} STREQUAL "True")
+  target_compile_definitions(${PROGRAM_NAME} PUBLIC "INCLUDE_MAIN")
+endif ()
+
+if (${SHARED} STREQUAL "True")
+  target_compile_definitions(${PROGRAM_NAME} PUBLIC "GTEST_LINKED_AS_SHARED_LIBRARY=1")
+endif ()

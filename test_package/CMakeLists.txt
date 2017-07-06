@@ -14,7 +14,5 @@ add_executable(${EXE_NAME} GMockExample.cpp)
 
 find_package(Threads)
 
+
 target_link_libraries(${EXE_NAME} PRIVATE ${CONAN_LIBS} PRIVATE ${CMAKE_THREAD_LIBS_INIT})
-
-set_target_properties(${EXE_NAME} PROPERTIES CXX_STANDARD 11)
-

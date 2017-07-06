@@ -8,8 +8,10 @@ conan remove -f GMock*
 
 conan_server&
 echo "Conan server 1st run: $?"
+sleep 5
 ./stopConanServer.sh
 echo "Conan server 1st run was stopped: $?"
+sleep 5
 cp ../server.conf $HOME/.conan_server/
 
 conan_server&

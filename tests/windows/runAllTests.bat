@@ -31,6 +31,21 @@ SET "VISUAL_STUDIO_COMPILER=%VISUAL_STUDIO_COMPILER_DIR%\cl.exe"
 
 SET "PATH=%MINGW_BIN_DIR%;%VISUAL_STUDIO_COMPILER_DIR%;%CONAN_DIR%;C:\Python27;%PATH%;C:\Windows\System32"
 
+IF NOT EXIST "%GPP%" (
+    ECHO "g++ doesn't exists: %GPP%"
+    EXIT 1
+)
+
+IF NOT EXIST "%GCC%" (
+    ECHO "gcc doesn't exists: %GCC%"
+    EXIT 1
+)
+
+IF NOT EXIST "%VISUAL_STUDIO_COMPILER%" (
+    ECHO "Visual Studio compiler doesn't exists: %VISUAL_STUDIO_COMPILER%"
+    EXIT 1
+)
+
 CALL runConanPackageTest.bat
 IF %errorlevel% neq 0 EXIT /b %errorlevel%
 

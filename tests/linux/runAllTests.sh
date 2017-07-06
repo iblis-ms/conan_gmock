@@ -19,10 +19,12 @@ export clangName="clang"
 export gccVersion=$gccVersionMajor.$gccVersionMinor
 export gccCppBin=/usr/bin/g++-$gccVersionMajor
 export gccCcBin=/usr/bin/gcc-$gccVersionMajor
+export gccName="gcc"
 
+export sharedLibExt="so"
+export staticLibExt="a"
 
 ./runConanPackageTest.sh
 
 ./runTestPrograms.sh
-
 

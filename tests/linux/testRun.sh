@@ -2,9 +2,7 @@
 
 set -e
 
-
-currentScriptPath=$(readlink -f "$0")
-currentDir=$(dirname "$currentScriptPath")
+currentDir=`pwd`
 
 export repoBaseDir=$currentDir/../..
 

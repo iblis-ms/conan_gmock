@@ -4,8 +4,7 @@ set -e
 
 echo "------------------ program tests ------------------"
 
-currentScriptPath=$(readlink -f "$0")
-currentDir=$(dirname "$currentScriptPath")
+currentDir=`pwd`
 
 if [ -d ~/.conan_server/data/GMock ]
 then
@@ -19,14 +18,38 @@ fi
 
 ./startConanServer.sh
 
-for compiler in $clangName gcc
+
+for shared in True False
 do
-  for stdlib in libc++ libstdc++ libstdc++11
+  for gtest in True False
   do
-    if [ "$compiler" != "gcc" ] || [ "$stdlib" != "libc++" ]
-    then
-      ./run.sh $compiler $stdlib
-    fi
+    for gmock in True False
+    do
+      if [ "$gtest" != "False" ] || [ "$gmock" != "False" ]
+      then
+        for include_main in True False
+        do
+
+          for compiler in clang gcc
+          do
+            for stdlib in libc++ libstdc++ libstdc++11
+            do
+              if [ "$compiler" != "gcc" ] || [ "$stdlib" != "libc++" ]
+              then
+                echo "--------------------------------------------"
+                echo "-------------------- compiler: ${compiler}"
+                echo "-------------------- stdlib: ${stdlib}"
+                echo "-------------------- gmock: ${gmock}"
+                echo "-------------------- gtest: ${gtest}"
+                echo "-------------------- shared: ${shared}"
+                echo "-------------------- include_main: ${include_main}"
+                ./run.sh $compiler $stdlib $gmock $gtest $shared $include_main
+              fi
+            done
+          done
+        done
+      fi
+    done
   done
 done
 

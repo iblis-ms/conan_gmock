@@ -12,6 +12,9 @@ export clangCppBin=/usr/bin/clang++
 export clangCcBin=/usr/bin/clang
 export clangName="apple-clang"
 
+export sharedLibExt="dylib"
+export staticLibExt="a"
+
 ./runConanPackageTest.sh
 
 ./runTestPrograms.sh
