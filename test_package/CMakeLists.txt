@@ -1,5 +1,5 @@
 # Author: Marcin Serwach
-# https://github.com/iblis-ms/conan_gbenchmark
+# https://github.com/iblis-ms/conan_gmock
 
 cmake_minimum_required(VERSION 2.8.12)
 

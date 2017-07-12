@@ -11,6 +11,11 @@ SET "CC=%VISUAL_STUDIO_COMPILER%"
 SET "CXX=%VISUAL_STUDIO_COMPILER%"
 
 ECHO "------------------ test program: Visual Studio %VISUAL_STUDIO_VERSION%  ------------------"
+ECHO "-------------------- stdlib: %LIB_STD%"
+ECHO "-------------------- gmock: %GMOCK%"
+ECHO "-------------------- gtest: %GTEST%"
+ECHO "-------------------- shared: %SHARED%"
+ECHO "-------------------- include_main: %INCLUDE_MAIN%"
 
 SET "CURRENT_DIR=%~dp0"
 SET "APP_DIR=%CURRENT_DIR%\..\app"
@@ -35,31 +40,45 @@ ECHO [generators]
 ECHO cmake
 ECHO [imports]
 ECHO bin, *.dll -^> ../!NAME!/bin
-ECHO bin, *.dylib* -^> ../!NAME!/bin
-ECHO bin, *.so -^> ../!NAME!/bin
+ECHO lib, *.dylib* -^> ../!NAME!/bin
+ECHO lib, *.so -^> ../!NAME!/bin
 ECHO lib, *.a -^> ../!NAME!/lib
 ECHO lib, *.lib -^> ../!NAME!/lib
 ECHO docs, * -^> ../!NAME!/docs
 ) > "conanfile.txt"
-                    
-CALL conan install --build -s compiler="Visual Studio" -s compiler.version=%VISUAL_STUDIO_VERSION% -s compiler.runtime=MT
-IF %errorlevel% neq 0 EXIT /b %errorlevel%
 
 MKDIR %OUTPUT_DIR%
+COPY conanfile.txt %OUTPUT_DIR%\conanfile.txt
+
+IF "%SHARED%" == "True" (
+    CALL conan install -s compiler="Visual Studio" -s compiler.version=%VISUAL_STUDIO_VERSION% -s compiler.runtime=MD --build
+) ELSE (
+    CALL conan install -s compiler="Visual Studio" -s compiler.version=%VISUAL_STUDIO_VERSION% -s compiler.runtime=MT --build
+)
+IF %errorlevel% neq 0 EXIT /b %errorlevel%
+
 CD %OUTPUT_DIR%
 
 SET "CC=%VISUAL_STUDIO_COMPILER%"
 SET "CXX=%VISUAL_STUDIO_COMPILER%"
 
 ECHO "------ Generating Visual Studio project"
-cmake -G "Visual Studio %VISUAL_STUDIO_VERSION% %VISUAL_STUDIO_YEAR% Win64" -DCMAKE_BUILD_TYPE=Release -DBUILD_GTEST=%GTEST% -DBUILD_GMOCK=%GMOCK% -DSHARED=%SHARED% -DINCLUDE_MAIN=%INCLUDE_MAIN% %APP_DIR% 
+
+ECHO "cmake -G Visual Studio %VISUAL_STUDIO_VERSION% %VISUAL_STUDIO_YEAR% Win64 -DCMAKE_BUILD_TYPE=Release -DBUILD_GTEST=%GTEST% -DBUILD_GMOCK=%GMOCK% -DSHARED=%SHARED% -DINCLUDE_MAIN=%INCLUDE_MAIN% %APP_DIR%"
+
+cmake -G "Visual Studio %VISUAL_STUDIO_VERSION% %VISUAL_STUDIO_YEAR% Win64" -DCMAKE_BUILD_TYPE=Debug -DBUILD_GTEST=%GTEST% -DBUILD_GMOCK=%GMOCK% -DSHARED=%SHARED% -DINCLUDE_MAIN=%INCLUDE_MAIN% %APP_DIR% 
 IF %errorlevel% neq 0 EXIT /b %errorlevel%
 
 ECHO "------ Compiling Visual Studio project"
 cmake --build .
-IF %errorlevel% neq 0 EXIT /b %errorlevel%
+SET "ABC=%errorlevel%"
+IF %ABC% neq 0 EXIT /b %ABC%
+ECHO "------ Checking if program exists"
 
-CD %OUTPUT_DIR%\bin
+CD bin
+IF NOT EXIST GMockTestProgram.exe EXIT /b 1
+
+ECHO "------ Start program"
 GMockTestProgram
 IF %errorlevel% neq 0 EXIT /b %errorlevel%
 

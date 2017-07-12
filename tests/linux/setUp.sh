@@ -9,6 +9,6 @@ export repoBaseDir=$currentDir/../..
 
 cd $repoBaseDir
 
-docker build -t conan_gbenchmark . 
+docker build -t conan_gmock . 
 
 cd $currentDir

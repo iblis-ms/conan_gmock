@@ -45,6 +45,7 @@ if [ -d "$outputDir" ]
 then
   rm -rf "$outputDir"
 fi
+mkdir "$outputDir"
 
 cat > conanfile.txt << EOL
 [requires]
@@ -67,6 +68,8 @@ lib, *.a -> ../${name}/lib
 lib, *.lib -> ../${name}/lib
 docs, * -> ../${name}/docs
 EOL
+
+cp conanfile.txt "$outputDir/conanfile.txt"
 
 echo "conan install --build -s compiler=$compilerName -s compiler.version=$compilerVersion -s compiler.libcxx=$stdlib"
 conan install --build -s compiler=$compilerName -s compiler.version=$compilerVersion -s compiler.libcxx=$stdlib

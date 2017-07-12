@@ -1,10 +1,10 @@
-# Conan.io with Google Benchmark
+# Conan.io with GoogleMock (GMock) & GoogleTest (GTest)
 
 Linux/OSx
 [![Build Status](https://travis-ci.org/iblis-ms/conan_gmock.svg?branch=master)](https://travis-ci.org/iblis-ms/conan_gmock)
 
 Windows
-[![Build status](https://ci.appveyor.com/api/projects/status/github/iblis-ms/conan_gmock?branch=master&svg=true)](https://ci.appveyor.com/api/projects/status/github/iblis-ms/conan_gmock?branch=master&svg=true)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/iblis-ms/conan_gmock?branch=master&svg=true)](https://ci.appveyor.com/project/iblis-ms/conan-gmock)
 
 
 Conan.io ([version 0.24.0](https://www.conan.io/downloads)) is a C/C++ package manager. It allows downloading, compiling external libraries for specific operating system, architecture or with given compilation flags. Conan.io can be extremely helpful with big project with many components by automatic downloading (and building if required) dependency components.
@@ -38,7 +38,7 @@ conan export iblis_ms/stable
 conan upload GMock/1.8.0@iblis_ms/stable --all -r=local
 ```
 * To test if it is working correctly. Enter to *tests/app* folder.
-* Run Conan.io to link program with Google Benchmark
+* Run Conan.io to link program with GoogleMock
 ```
 conan install --build
 ```
@@ -121,6 +121,11 @@ There are automatic tests for operating systems and compilers below. For each ca
 
 CMake version: 3.8.1
 
+* MinGW x86_64 (Conan.io automatically adds required option: gtest_disable_pthreads=True)
+  * version: 6.3.0
+    - conan test_package -s compiler=gcc -s compiler.version=6.3 -s compiler.libcxx=libstdc++11
+    - conan test_package -s compiler=gcc -s compiler.version=6.3 -s compiler.libcxx=libstdc++
+    
 * Visual Studio Community 
   * version: 2017
     - conan test_package -s compiler="Visual Studio" -s compiler.version=15 -s compiler.runtime=MD

@@ -1,11 +1,9 @@
 // Author: Marcin Serwach
-// https://github.com/iblis-ms/conan_gbenchmark
+// https://github.com/iblis-ms/conan_gmock
 
 #include <iostream>
 
 #ifdef BUILD_GMOCK
-
-// -DBUILD_GTEST=${gtest} -DBUILD_GMOCK
 
 // adds GTest header
 #include <gtest/gtest.h>
@@ -52,14 +50,10 @@ TEST_F(CMyTestCase, ExpectCall_simple)
 
 }
 
-#if !defined(INCLUDE_MAIN)
-#if GTEST_OS_WINDOWS_MOBILE
-# include <tchar.h>  // NOLINT
+#ifndef INCLUDE_MAIN
 
-GTEST_API_ int _tmain(int argc, TCHAR** argv) {
-#else
-GTEST_API_ int main(int argc, char** argv) {
-#endif  // GTEST_OS_WINDOWS_MOBILE
+int main(int argc, char** argv) {
+
   std::cout << "Running main() from gmock_main.cc\n";
   // Since Google Mock depends on Google Test, InitGoogleMock() is
   // also responsible for initializing Google Test.  Therefore there's
@@ -67,6 +61,7 @@ GTEST_API_ int main(int argc, char** argv) {
   testing::InitGoogleMock(&argc, argv);
   return RUN_ALL_TESTS();
 }
+
 #endif // INCLUDE_MAIN
 
 #endif // BUILD_GMOCK
@@ -92,12 +87,14 @@ TEST_F(CMyTestCase, ExpectCall_simple)
 
 }
 
-#if !defined(INCLUDE_MAIN)
-GTEST_API_ int main(int argc, char **argv) {
+#ifndef INCLUDE_MAIN
+
+int main(int argc, char **argv) {
   printf("Running main() from gtest_main.cc\n");
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
-#endif // INCLUDE_MAIN
-#endif // BUILD_GTEST
 
+#endif // INCLUDE_MAIN
+
+#endif // BUILD_GTEST

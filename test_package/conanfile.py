@@ -1,5 +1,5 @@
 # Author: Marcin Serwach
-# https://github.com/iblis-ms/conan_gbenchmark
+# https://github.com/iblis-ms/conan_gmock
 
 from conans import ConanFile, CMake
 import os

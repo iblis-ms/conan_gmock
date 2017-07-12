@@ -1,5 +1,5 @@
 # Author: Marcin Serwach
-# https://github.com/iblis-ms/conan_gbenchmark
+# https://github.com/iblis-ms/conan_gmock
 
 from conans import ConanFile, CMake, tools
 from conans.model.settings import Settings
@@ -12,7 +12,7 @@ class GMockConan(ConanFile):
     name = 'GMock'
     version = '1.8.0'
     license = 'MIT LIcence'
-    url = 'https://github.com/iblis-ms/conan_gbenchmark/tree/development'
+    url = 'https://github.com/iblis-ms/conan_gmock'
     description = 'Conan.io support for Google Mock'
     settings = ['os', 'compiler', 'build_type', 'arch']
     options = {
@@ -60,11 +60,15 @@ class GMockConan(ConanFile):
                 self.includeMainLib = (val == "True")
             else:
                 cmake.definitions[opt] = 'ON' if val == "True" else 'OFF'
-        #cmake.definitions['BUILD_SHARED_LIBS'] = 'ON'
+
         self.shared = (cmake.definitions['BUILD_SHARED_LIBS'] == 'ON')
         self.gTestBuild = (cmake.definitions['BUILD_GTEST'] == 'ON')
         self.gMockBuild = (cmake.definitions['BUILD_GMOCK'] == 'ON')
+        cmake.definitions['CMAKE_BUILD_TYPE'] = 'Release'
 
+        if cmake.generator == "MinGW Makefiles":
+            cmake.definitions['gtest_disable_pthreads'] = 'ON' # see https://github.com/google/googletest/pull/721
+            
         sys.stdout.write("\ncmake %s %s\n\n" % (cmake.command_line, self._conanfile_directory))
 
         cmake.configure(source_dir=self._conanfile_directory, build_dir='_build')
@@ -77,7 +81,7 @@ class GMockConan(ConanFile):
         
         libSrc='_build'
         
-        dstLibExt = {'bin' : ['dll'], 'lib' : ['so', 'dylib', 'a', 'lib']}
+        dstLibExt = {'bin' : ['dll'], 'lib' : ['so', 'dylib', 'a', 'dll.a', 'lib', 'pdb']} # dll.a - MinGW
         
         for (dst, libExts) in dstLibExt.items():
             for libExt in libExts:

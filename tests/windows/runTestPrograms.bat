@@ -26,25 +26,14 @@ FOR %%m IN (True False) DO (
             IF "!RUN!" == "True" (
                 FOR %%a IN (True False) DO (
                     SET "INCLUDE_MAIN=%%a"
-                    ECHO "GMOCK=!GMOCK! GTEST=!GTEST! SHARED=!SHARED! INCLUDE_MAIN=!INCLUDE_MAIN!"
                     
-                    ECHO "--------------------------------------------"
-                    ECHO "-------------------- compiler: Visual Studio"
-                    REM echo "-------------------- stdlib: ${stdlib}"
-                    ECHO "-------------------- gmock: !GMOCK!"
-                    ECHO "-------------------- gtest: !GTEST!
-                    ECHO "-------------------- shared: !SHARED!"
-                    ECHO "-------------------- include_main: !INCLUDE_MAIN!"
+                    CALL runVisual.bat !GMOCK! !GTEST! !SHARED! !INCLUDE_MAIN! || exit /b 1
                     
-                    CALL runVisual.bat !GMOCK! !GTEST! !SHARED! !INCLUDE_MAIN!
-                    IF %errorlevel% neq 0 EXIT /b %errorlevel%
-                    REM CALL runGcc.bat !GMOCK! !GTEST! !SHARED! !INCLUDE_MAIN! libstdc++
-                    REM IF %errorlevel% neq 0 EXIT /b %errorlevel%
-                    REM CALL runGcc.bat !GMOCK! !GTEST! !SHARED! !INCLUDE_MAIN! libstdc++11
-                    REM IF %errorlevel% neq 0 EXIT /b %errorlevel%
+                    CALL runGcc.bat !GMOCK! !GTEST! !SHARED! !INCLUDE_MAIN! libstdc++ || exit /b 1
+                    
+                    CALL runGcc.bat !GMOCK! !GTEST! !SHARED! !INCLUDE_MAIN! libstdc++11 || exit /b 1
                 )
             )
-            
         )
     )
 )
