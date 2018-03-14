@@ -16,8 +16,6 @@ then
   rm -rf ~/.conan/data/GMock
 fi
 
-./startConanServer.sh
-
 
 for shared in True False
 do
@@ -53,6 +51,5 @@ do
   done
 done
 
-./stopConanServer.sh
 
 cd "$currentDir"

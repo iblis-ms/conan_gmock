@@ -71,8 +71,8 @@ EOL
 
 cp conanfile.txt "$outputDir/conanfile.txt"
 
-echo "conan install --build -s compiler=$compilerName -s compiler.version=$compilerVersion -s compiler.libcxx=$stdlib"
-conan install --build -s compiler=$compilerName -s compiler.version=$compilerVersion -s compiler.libcxx=$stdlib
+echo "conan install . --build -s compiler=$compilerName -s compiler.version=$compilerVersion -s compiler.libcxx=$stdlib"
+conan install . --build -s compiler=$compilerName -s compiler.version=$compilerVersion -s compiler.libcxx=$stdlib
 
 cd "$outputDir"
 

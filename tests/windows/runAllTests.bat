@@ -11,7 +11,7 @@ SET "CONAN_DIR=%CURRENT_PATH%\%CONAN_FOLDER_NAME%"
 IF "%CI%"=="" (
   SET VISUAL_STUDIO_YEAR=2017
   SET VISUAL_STUDIO_VERSION=15
-  SET "VISUAL_STUDIO_COMPILER_DIR=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.10.25017\bin\HostX64\x64"
+  SET "VISUAL_STUDIO_COMPILER_DIR=C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.12.25827\bin\HostX64\x64"
   
   SET "MINGW_DIR=C:\Program Files\mingw-w64\x86_64-6.3.0-posix-seh-rt_v5-rev2"
   
@@ -46,10 +46,17 @@ IF NOT EXIST "%VISUAL_STUDIO_COMPILER%" (
     EXIT 1
 )
 
+CALL startConanServer.bat
+IF %errorlevel% neq 0 EXIT /b %errorlevel%
+
 CALL runConanPackageTest.bat
 IF %errorlevel% neq 0 EXIT /b %errorlevel%
 
 CALL runTestPrograms.bat
+IF %errorlevel% neq 0 EXIT /b %errorlevel%
+
+
+CALL stopConanServer.bat
 IF %errorlevel% neq 0 EXIT /b %errorlevel%
 
 ECHO "Success"

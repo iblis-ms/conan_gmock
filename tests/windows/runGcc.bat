@@ -50,7 +50,7 @@ ECHO docs, * -^> ../!NAME!/docs
 MKDIR "%OUTPUT_DIR%"
 COPY conanfile.txt "%OUTPUT_DIR%\conanfile.txt"
 
-CALL conan install --build -s compiler=gcc -s compiler.version=%GCC_VERSION% -s compiler.libcxx=%LIB_STD%
+CALL conan install . --build -s compiler=gcc -s compiler.version=%GCC_VERSION% -s compiler.libcxx=%LIB_STD%
 IF %errorlevel% neq 0 EXIT /b %errorlevel%
 
 CD "%OUTPUT_DIR%"

@@ -7,7 +7,7 @@ Windows
 [![Build status](https://ci.appveyor.com/api/projects/status/github/iblis-ms/conan_gmock?branch=master&svg=true)](https://ci.appveyor.com/project/iblis-ms/conan-gmock)
 
 
-Conan.io ([version 0.24.0](https://www.conan.io/downloads)) is a C/C++ package manager. It allows downloading, compiling external libraries for specific operating system, architecture or with given compilation flags. Conan.io can be extremely helpful with big project with many components by automatic downloading (and building if required) dependency components.
+Conan.io ([version 1.1.1](https://www.conan.io/downloads)) is a C/C++ package manager. It allows downloading, compiling external libraries for specific operating system, architecture or with given compilation flags. Conan.io can be extremely helpful with big project with many components by automatic downloading (and building if required) dependency components.
 This repository contains configuration files to use Googlemock/Googletest (GTest/GMock) version 1.8.0 with your code. 
 
 # How to use it?
@@ -123,34 +123,47 @@ CMake version: 3.8.1
 
 * MinGW x86_64 (Conan.io automatically adds required option: gtest_disable_pthreads=True)
   * version: 6.3.0
-    - conan test_package -s compiler=gcc -s compiler.version=6.3 -s compiler.libcxx=libstdc++11
-    - conan test_package -s compiler=gcc -s compiler.version=6.3 -s compiler.libcxx=libstdc++
+    - conan test test_package -s compiler=gcc -s compiler.version=6.3 -s compiler.libcxx=libstdc++11
+    - conan test test_package -s compiler=gcc -s compiler.version=6.3 -s compiler.libcxx=libstdc++
     
 * Visual Studio Community 
   * version: 2017
-    - conan test_package -s compiler="Visual Studio" -s compiler.version=15 -s compiler.runtime=MD
+    - conan test test_package -s compiler="Visual Studio" -s compiler.version=15 -s compiler.runtime=MD
   * version: 2015
-    - conan test_package -s compiler="Visual Studio" -s compiler.version=14 -s compiler.runtime=MD
+    - conan test test_package -s compiler="Visual Studio" -s compiler.version=14 -s compiler.runtime=MD
 
-## Ubuntu 17.04 64bits
+## Ubuntu 16.04 64bits
 
-CMake version: 3.7.2
+CMake version: 3.10.2
 
 * GCC
-  * version: 6.3
-    - conan test_package -s compiler=gcc -s compiler.version=6.3 -s compiler.libcxx=libstdc++
-    - conan test_package -s compiler=gcc -s compiler.version=6.3 -s compiler.libcxx=libstdc++11
+  * version: 7.3
+    - conan test test_package -s compiler=gcc -s compiler.version=7.3 -s compiler.libcxx=libstdc++
+    - conan test test_package -s compiler=gcc -s compiler.version=7.3 -s compiler.libcxx=libstdc++11
 
 * Clang
-  * version: 4.0
-    - conan test_package -s compiler=clang -s compiler.version=4.0 -s compiler.libcxx=libc++
-    - conan test_package -s compiler=clang -s compiler.version=4.0 -s compiler.libcxx=libstdc++
-    - conan test_package -s compiler=clang -s compiler.version=4.0 -s compiler.libcxx=libstdc++11
+  * version: 5.0
+    - conan test test_package -s compiler=clang -s compiler.version=5.0 -s compiler.libcxx=libc++
+    - conan test test_package -s compiler=clang -s compiler.version=5.0 -s compiler.libcxx=libstdc++
+    - conan test test_package -s compiler=clang -s compiler.version=5.0 -s compiler.libcxx=libstdc++11
 
 ## OSX Sierra 64bits
 
 CMake version: 3.8.2
 
 * Clang (apple-clang in Conan.io)
-  * version: 8.1 (based on Clang 3.1)
-    - conan test_package -s compiler=apple-clang -s compiler.version=8.1 -s compiler.libcxx=libc++
+  * version: Apple LLVM version 8.1.0 (clang-802.0.42)
+    - conan test test_package -s compiler=apple-clang -s compiler.version=8.1 -s compiler.libcxx=libc++
+
+## Linter Warnings
+
+There are few warnings, that can be ignored - code is OK.
+
+> Linter warnings
+>    WARN: Linter. Line 4: Unable to import 'conans'
+>    WARN: Linter. Line 5: Unable to import 'os'
+>    WARN: Linter. Line 7: Unable to import 'shutil'
+>    WARN: Linter. Line 47: Instance of 'list' has no 'compiler' member
+>    WARN: Linter. Line 47: Instance of 'list' has no 'compiler' member
+>    WARN: Linter. Line 66: Instance of 'list' has no 'os' member
+

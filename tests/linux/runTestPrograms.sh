@@ -32,7 +32,7 @@ do
 
           for compiler in clang gcc
           do
-            for stdlib in libc++ libstdc++ libstdc++11
+            for stdlib in libstdc++ libstdc++11 #libc++ 
             do
               if [ "$compiler" != "gcc" ] || [ "$stdlib" != "libc++" ]
               then

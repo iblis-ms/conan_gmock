@@ -7,7 +7,7 @@ SET "CONAN_DIR=%CURRENT_DIR%%CONAN_FOLDER_NAME%"
 IF EXIST "%CONAN_DIR%" RD /q /s "%CONAN_DIR%"
 git clone https://github.com/conan-io/conan.git "%CONAN_FOLDER_NAME%"
 CD %CONAN_DIR%
-git checkout tags/0.24.0
+git checkout tags/1.1.1
 pip install -r %CONAN_DIR%\conans\requirements.txt
 pip install -r %CONAN_DIR%\conans\requirements_server.txt
 pip install -r %CONAN_DIR%\conans\requirements_dev.txt

@@ -15,7 +15,11 @@ export clangName="apple-clang"
 export sharedLibExt="dylib"
 export staticLibExt="a"
 
+./startConanServer.sh
+
 ./runConanPackageTest.sh
 
 ./runTestPrograms.sh
 
+
+./stopConanServer.sh

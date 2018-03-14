@@ -5,7 +5,6 @@ ECHO "------------------ program tests ------------------"
 
 SET "CURRENT_PATH=%~dp0"
 
-CALL startConanServer.bat
 IF %errorlevel% neq 0 EXIT /b %errorlevel%
 
 FOR %%m IN (True False) DO (
@@ -37,8 +36,5 @@ FOR %%m IN (True False) DO (
         )
     )
 )
-
-CALL stopConanServer.bat
-IF %errorlevel% neq 0 EXIT /b %errorlevel%
 
 CD %CURRENT_PATH%

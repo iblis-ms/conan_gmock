@@ -1,12 +1,17 @@
 # Author: Marcin Serwach
 # https://github.com/iblis-ms/conan_gmock
 
-from conans import ConanFile, CMake, tools
-from conans.model.settings import Settings
-from conans.model.settings import SettingsItem
-from conans.tools import get
+#from conans import ConanFile, CMake, tools
+#from conans.model.settings import Settings
+#from conans.model.settings import SettingsItem
+#from conans.tools import get
+#import os
+#import sys
+#import shutil
+from conans import ConanFile, CMake
 import os
 import sys
+import shutil
 
 class GMockConan(ConanFile):
     name = 'GMock'
@@ -44,16 +49,23 @@ class GMockConan(ConanFile):
     includeMainLib = False
     gTestBuild = False
     gMockBuild = False
+    buildFolder = '_build'
 
     def source(self):
-        zipName = 'release-%s.zip' % self.version
-        get('https://github.com/google/googletest/archive/%s' % zipName)
+        folderNameDownloaded = 'googletest'
+        folderNameWithVersion = self.source_root
+     
+        if os.environ.get('APPVEYOR') == 'True':
+            git = '\"C:\\Program Files\\Git\\mingw64\\bin\\git.exe\"' # git is not present in PATH on AppVeyor
+        else:
+            git = 'git'
+        self.run('%s clone https://github.com/google/googletest.git' % git)
+        shutil.move(folderNameDownloaded, folderNameWithVersion)
+        self.run("cd %s && %s checkout tags/release-%s -b %s" % (folderNameWithVersion, git, self.version, self.version))
 
     def build(self):
         
-        cmake = CMake(
-            settings_or_conanfile = self,
-            )
+        cmake = CMake(self)
 
         for (opt, val) in self.options.items():
             if opt == 'include_main':
@@ -64,17 +76,15 @@ class GMockConan(ConanFile):
         self.shared = (cmake.definitions['BUILD_SHARED_LIBS'] == 'ON')
         self.gTestBuild = (cmake.definitions['BUILD_GTEST'] == 'ON')
         self.gMockBuild = (cmake.definitions['BUILD_GMOCK'] == 'ON')
-        cmake.definitions['CMAKE_BUILD_TYPE'] = 'Release'
 
         if cmake.generator == "MinGW Makefiles":
             cmake.definitions['gtest_disable_pthreads'] = 'ON' # see https://github.com/google/googletest/pull/721
-            
-        sys.stdout.write("\ncmake %s %s\n\n" % (cmake.command_line, self._conanfile_directory))
 
-        cmake.configure(source_dir=self._conanfile_directory, build_dir='_build')
+        sys.stdout.write("cmake " + str(cmake.command_line) + "\n")
 
+        cmake.configure(source_dir=self.build_folder, build_dir=self.buildFolder)
+        
         cmake.build()
-
 
     def packageCommon(self, copyMain, copyLib, libMainName, parentIncludeDirName, pathToLibs):
         self.copy(pattern='*.h', dst='include', src=os.path.join(self.source_root, parentIncludeDirName, 'include'), keep_path=True)

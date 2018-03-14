@@ -1,4 +1,4 @@
-FROM iblisms/ubuntu-cpp-base:17.04
+FROM iblisms/ubuntu_cpp:16.04
 
 RUN mkdir /test
 ADD . /test

@@ -4,10 +4,10 @@ set -e
 
 export repoBaseDir=`pwd`/../..
 
-export clangVersionMajor=4
+export clangVersionMajor=5
 export clangVersionMinor=0
 
-export gccVersionMajor=6
+export gccVersionMajor=7
 export gccVersionMinor=3
 
 
