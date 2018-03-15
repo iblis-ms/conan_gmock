@@ -51,9 +51,9 @@ MKDIR %OUTPUT_DIR%
 COPY conanfile.txt %OUTPUT_DIR%\conanfile.txt
 
 IF "%SHARED%" == "True" (
-    CALL conan install -s compiler="Visual Studio" -s compiler.version=%VISUAL_STUDIO_VERSION% -s compiler.runtime=MD --build
+    CALL conan install . -s compiler="Visual Studio" -s compiler.version=%VISUAL_STUDIO_VERSION% -s compiler.runtime=MD --build
 ) ELSE (
-    CALL conan install -s compiler="Visual Studio" -s compiler.version=%VISUAL_STUDIO_VERSION% -s compiler.runtime=MT --build
+    CALL conan install . -s compiler="Visual Studio" -s compiler.version=%VISUAL_STUDIO_VERSION% -s compiler.runtime=MT --build
 )
 IF %errorlevel% neq 0 EXIT /b %errorlevel%
 

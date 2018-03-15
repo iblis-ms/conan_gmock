@@ -4,3 +4,4 @@ conanbuildinfo.cmake
 conaninfo.txt
 .DS_Store
 *.pyc
+*~

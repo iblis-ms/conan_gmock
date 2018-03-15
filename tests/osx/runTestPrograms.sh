@@ -6,17 +6,6 @@ echo "------------------ program tests ------------------"
 
 currentDir=`pwd`
 
-if [ -d ~/.conan_server/data/GMock ]
-then
-  rm -rf ~/.conan_server/data/GMock
-fi
-
-if [ -d ~/.conan/data/GMock ]
-then
-  rm -rf ~/.conan/data/GMock
-fi
-
-./startConanServer.sh
 
 
 for shared in True False
@@ -53,6 +42,5 @@ do
   done
 done
 
-./stopConanServer.sh
 
 cd "$currentDir"
