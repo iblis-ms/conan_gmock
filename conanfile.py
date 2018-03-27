@@ -1,13 +1,6 @@
 # Author: Marcin Serwach
 # https://github.com/iblis-ms/conan_gmock
 
-#from conans import ConanFile, CMake, tools
-#from conans.model.settings import Settings
-#from conans.model.settings import SettingsItem
-#from conans.tools import get
-#import os
-#import sys
-#import shutil
 from conans import ConanFile, CMake
 import os
 import sys
